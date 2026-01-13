@@ -1,88 +1,72 @@
-public class Product {
-    private String name;
-    private double price;
+class Product{
 
-    public Product(String name, double price) {
-        this.name = name;
-        this.price = price;
+    String name;
+    double price;
+
+    Product(String n, double p){
+        name = n;
+        price = p;
     }
-
-    public String getName() {
+    String getName(){
         return name;
     }
-
-    public double getPrice() {
+    double getPrice(){
         return price;
     }
-
-    @Override
-    public String toString() {
-        return name + " — " + price + " руб.";
-    }
 }
-
 import java.util.ArrayList;
 
-public class Cart {
-    private ArrayList<Product> products;
+class Cart{
 
-    public Cart() {
-        products = new ArrayList<>();
+    ArrayList<Product> list;
+
+    Cart(){
+        list = new ArrayList<Product>();
     }
 
-    public void addProduct(Product p) {
-        products.add(p);
+    void add(Product pr){
+        list.add(pr);
     }
 
-    public void removeProduct(String name) {
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getName().equals(name)) {
-                products.remove(i);
-                break;
+    void del(String name){
+        for (int i = 0; i < list.size(); i++){
+            if (list.get(i).getName().equals(name)){
+                list.remove(i);
+                return;
             }
         }
     }
-
-    public double getTotal() {
-        double total = 0;
-        for (Product p : products) {
-            total += p.getPrice();
+    double sum(){
+        double s = 0;
+        for (int i = 0; i < list.size(); i++){
+            s = s + list.get(i).getPrice();
         }
-        return total;
+        return s;
     }
 
-    public void printCart() {
-        System.out.println("=== Корзина ===");
-        for (int i = 0; i < products.size(); i++) {
-            System.out.println((i + 1) + ". " + products.get(i));
+    void show() {
+        System.out.println("Ваша корзина:");
+        for (int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i).getName() + " " + list.get(i).getPrice());
         }
-        System.out.println("Итого: " + getTotal() + " руб.\n");
+        System.out.println("Сумма выбранных товаров = " + sum());
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        // Создаем товары
-        Product laptop = new Product("Ноутбук", 75000.0);
-        Product mouse = new Product("Мышка", 1500.0);
-        Product keyboard = new Product("Клавиатура", 3000.0);
+public class Main{
+    public static void main(String[] args){
 
-        // Создаем корзину
-        Cart cart = new Cart();
-
-        // Добавляем товары в корзину
-        cart.addProduct(laptop);
-        cart.addProduct(mouse);
-        cart.addProduct(keyboard);
-
-        // Показываем корзину
-        cart.printCart();
-
-        // Удаляем товар
-        System.out.println("Удаляем: Мышка");
-        cart.removeProduct("Мышка");
-
-        // Снова показываем корзину
-        cart.printCart();
+        Product a = new Product("Яблоко", 15);
+        Product b = new Product("Банан", 24);
+        Product c = new Product("Як", 1500000);
+        Cart k = new Cart();
+        k.add(a);
+        k.add(b);
+        k.add(c);
+        k.show();
+        k.del("Яблоко");
+        k.show();
     }
 }
+
+
